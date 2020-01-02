@@ -1,11 +1,15 @@
 :root {
-    --size: 50;
+    --size: 16;
     box-sizing: border-box;
 }
 
+* {
+    margin: 0;
+}
+
 #canvas {
-    height: 700px;
-    width: 700px;
+    width: 500px;
+    height: 500px;
     margin: auto;
     display: grid;
     grid-template-columns: repeat(var(--size), 1fr);
