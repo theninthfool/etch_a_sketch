@@ -1,7 +1,8 @@
 let canvas = document.querySelector("#canvas");
 
 
-for (let i = 0; i < 16; i++) {
+let size = 50;
+for (let i = 0; i < size * size; i++) {
     let cell = document.createElement("div");
     cell.className = "cell";
     canvas.appendChild(cell);

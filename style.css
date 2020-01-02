@@ -1,6 +1,21 @@
+:root {
+    --size: 50;
+    box-sizing: border-box;
+}
+
+#canvas {
+    height: 700px;
+    width: 700px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(var(--size), 1fr);
+    grid-template-rows: repeat(var(--size), 1fr);
+}
+
 .cell {
-    border: 1px solid black;
-    width: 25px;
-    height: 25px;
-    float: left;
+    border: .1px solid gray;
+}
+
+.cell:hover {
+    background-color: orange;
 }
