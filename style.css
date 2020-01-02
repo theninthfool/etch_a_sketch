@@ -1,5 +1,4 @@
 :root {
-    --size: 16;
     box-sizing: border-box;
 }
 
@@ -12,6 +11,7 @@
     height: 500px;
     margin: auto;
     display: grid;
+    /* The size variable comes from js file */
     grid-template-columns: repeat(var(--size), 1fr);
     grid-template-rows: repeat(var(--size), 1fr);
 }
