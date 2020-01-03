@@ -52,7 +52,8 @@ function chooseColor(color) {
     let cellsObject = Object.assign({}, cells);
     let randomColor = chooseRandomColor();
     for (let i = 0; i < cells.length; i++) {
-        cellsObject[i].shadeLevel = 0;
+        cellsObject[i].blackShadeLevel = 0;
+        cellsObject[i].blueShadeLevel = 0;
         cells[i].addEventListener('mouseover', function() {
             if (color === "Eraser") {
                 this.style.background = "none";
@@ -61,17 +62,17 @@ function chooseColor(color) {
             } else if (color === "Rainbow") {
                 this.style.backgroundColor = chooseRandomColor();
             } else if (color === "Shade") {
-                if (cellsObject[i].shadeLevel < 1) {
-                    cellsObject[i].shadeLevel += .1;
-                    this.style.backgroundColor = "rgb(0,0,0," + cellsObject[i].shadeLevel + ")";
+                if (cellsObject[i].blackShadeLevel < 1) {
+                    cellsObject[i].blackShadeLevel += .1;
+                    this.style.backgroundColor = "rgb(0,0,0," + cellsObject[i].blackShadeLevel + ")";
                 } else {
                     this.style.backgroundColor = "rgb(0,0,0)";
                 }
 
             } else if (color === "Blue Shade") {
-                if (cellsObject[i].shadeLevel < 1) {
-                    cellsObject[i].shadeLevel += .1;
-                    this.style.backgroundColor = "rgb(0,0,255," + cellsObject[i].shadeLevel + ")";
+                if (cellsObject[i].blueShadeLevel < 1) {
+                    cellsObject[i].blueShadeLevel += .1;
+                    this.style.backgroundColor = "rgb(0,0,255," + cellsObject[i].blueShadeLevel + ")";
                 } else {
                     this.style.backgroundColor = "rgb(0,0,255)";
                 }
