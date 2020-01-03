@@ -7,6 +7,7 @@
 }
 
 #canvas {
+    background: white;
     width: 500px;
     height: 500px;
     margin: auto;
@@ -15,4 +16,11 @@
     grid-template-columns: repeat(var(--size), 1fr);
     grid-template-rows: repeat(var(--size), 1fr);
     border: .1px solid gray;
+}
+
+button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
 }
