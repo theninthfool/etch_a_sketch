@@ -1,7 +1,17 @@
 let canvas = document.querySelector("#canvas");
-//creates initial grid
 let size = 16;
 createGrid(size);
+
+
+
+// let cells = Array.from(document.querySelectorAll(".cell"));
+// for (let i = 0; i < cells.length; i++) {
+//     cells[i].addEventListener('mouseover', function() {
+//         this.classList.add('color');
+//     });
+// }
+
+
 
 
 //the button deletes the old grid and creates new one
@@ -14,12 +24,17 @@ button.addEventListener('click', function() {
 });
 
 function createGrid(size) {
-    console.log(size);
     document.documentElement.style.setProperty('--size', size);
     for (let i = 0; i < size * size; i++) {
-        let cell = document.createElement("div");
-        cell.className = "cell";
-        canvas.appendChild(cell);
+        let newCell = document.createElement("div");
+        newCell.classList.add('cell');
+        canvas.appendChild(newCell);
+    }
+    let cells = Array.from(document.querySelectorAll(".cell"));
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].addEventListener('mouseover', function() {
+            this.classList.add('orange');
+        });
     }
 }
 

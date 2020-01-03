@@ -14,12 +14,14 @@
     /* The size variable comes from js file */
     grid-template-columns: repeat(var(--size), 1fr);
     grid-template-rows: repeat(var(--size), 1fr);
-}
-
-.cell {
     border: .1px solid gray;
 }
 
-.cell:hover {
+
+/* .cell:hover {
+    background-color: orange;
+} */
+
+.orange {
     background-color: orange;
 }
