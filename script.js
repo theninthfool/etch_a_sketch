@@ -15,6 +15,16 @@ button.addEventListener('click', function() {
     createGrid(size);
 });
 
+let colorButtons = Array.from(document.querySelectorAll(".colorButtons"));
+for (let i = 0; i < colorButtons.length; i++) {
+    colorButtons[i].addEventListener('click', function() {
+        chooseColor(this.textContent);
+    });
+}
+
+
+
+
 function createGrid(size) {
     document.documentElement.style.setProperty('--size', size);
     for (let i = 0; i < size * size; i++) {
@@ -36,42 +46,7 @@ function chooseColor(color) {
     let cells = Array.from(document.querySelectorAll(".cell"));
     for (let i = 0; i < cells.length; i++) {
         cells[i].addEventListener('mouseover', function() {
-            if (color === 'Red') {
-                this.style.backgroundColor = 'red';
-            } else if (color === 'Blue') {
-                this.style.backgroundColor = 'blue';
-            } else if (color === 'Green') {
-                this.style.backgroundColor = 'green';
-            } else if (color === 'Orange') {
-                this.style.backgroundColor = 'orange';
-            } else if (color === 'Black') {
-                this.style.backgroundColor = 'black';
-            }
+            this.style.backgroundColor = color;
         });
     }
-}
-
-
-
-let colorButtons = Array.from(document.querySelectorAll(".colorButtons"));
-for (let i = 0; i < colorButtons.length; i++) {
-    colorButtons[i].addEventListener('click', function() {
-        if (this.textContent === "Red") {
-            console.log("red");
-            chooseColor("Red");
-        }
-        if (this.textContent === "Blue") {
-            console.log('blue')
-            chooseColor("Blue");
-        }
-        if (this.textContent === "Green") {
-            chooseColor("Green");
-        }
-        if (this.textContent === "Orange") {
-            chooseColor("Orange");
-        }
-        if (this.textContent === "Black") {
-            chooseColor("Black");
-        }
-    });
 }
