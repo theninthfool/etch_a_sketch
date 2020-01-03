@@ -9,6 +9,9 @@ createGrid(size);
 
 
 // Buttons
+let resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', reset);
+
 //the choose size button deletes the old grid and creates new one
 let input = document.querySelector('#sizeInput')
 let button = document.querySelector("#sizeButton")
@@ -44,6 +47,11 @@ function deleteGrid() {
     while (canvas.firstChild) {
         canvas.removeChild(canvas.firstChild);
     }
+}
+
+function reset() {
+    deleteGrid();
+    createGrid(16);
 }
 
 
@@ -86,8 +94,7 @@ function chooseColor(color) {
 function chooseRandomColor() {
     return "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
 }
-
-function shader() {
-
-}
 // --Functions
+
+
+// Each time I use the shaders, it adds another event listener, so I need to delete the old one before adding the new
