@@ -49,8 +49,10 @@ function deleteGrid() {
 
 function chooseColor(color) {
     let cells = Array.from(document.querySelectorAll(".cell"));
+    let cellsObject = Object.assign({}, cells);
     let randomColor = chooseRandomColor();
     for (let i = 0; i < cells.length; i++) {
+        cellsObject[i].shadeLevel = 0;
         cells[i].addEventListener('mouseover', function() {
             if (color === "Eraser") {
                 this.style.background = "none";
@@ -58,6 +60,21 @@ function chooseColor(color) {
                 this.style.backgroundColor = randomColor;
             } else if (color === "Rainbow") {
                 this.style.backgroundColor = chooseRandomColor();
+            } else if (color === "Shade") {
+                if (cellsObject[i].shadeLevel < 1) {
+                    cellsObject[i].shadeLevel += .1;
+                    this.style.backgroundColor = "rgb(0,0,0," + cellsObject[i].shadeLevel + ")";
+                } else {
+                    this.style.backgroundColor = "rgb(0,0,0)";
+                }
+
+            } else if (color === "Blue Shade") {
+                if (cellsObject[i].shadeLevel < 1) {
+                    cellsObject[i].shadeLevel += .1;
+                    this.style.backgroundColor = "rgb(0,0,255," + cellsObject[i].shadeLevel + ")";
+                } else {
+                    this.style.backgroundColor = "rgb(0,0,255)";
+                }
             } else {
                 this.style.backgroundColor = color;
             }
@@ -67,5 +84,9 @@ function chooseColor(color) {
 
 function chooseRandomColor() {
     return "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+}
+
+function shader() {
+
 }
 // --Functions
