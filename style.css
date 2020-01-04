@@ -24,3 +24,10 @@ button {
     border: none;
     border-radius: 4px;
 }
+
+#currentColor {
+    height: 50px;
+    width: 50px;
+    border: 2px solid black;
+    margin-top: 10px;
+}

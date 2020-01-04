@@ -1,6 +1,7 @@
 // Initial Setup
 let color = '';
 let canvas = document.querySelector("#canvas");
+let currentColor = document.querySelector("#currentColor");
 let size = 16;
 createGrid(size);
 // --Initial Setup
@@ -38,7 +39,6 @@ function createGrid(size) {
     for (let i = 0; i < size * size; i++) {
         let newCell = document.createElement("div");
         newCell.classList.add('cell');
-        newCell.setAttribute('id', `cell${i}`);
         canvas.appendChild(newCell);
     }
     chooseColor('Black');
@@ -58,58 +58,53 @@ function reset() {
 
 function chooseColor(color) {
     let cells = Array.from(document.querySelectorAll(".cell"));
-    let randomColor = chooseRandomColor();
+    let randomColor = randomShade(1);
     let red = randomRGBValue();
     let blue = randomRGBValue();
     let green = randomRGBValue();
 
     for (let i = 0; i < cells.length; i++) {
         let shade = 0;
+        let cellColor = "";
         cells[i].addEventListener('mouseover', function() {
             if (color === "Eraser") {
-                this.style.background = "none";
+                cellColor = "none"
             } else if (color === "Random") {
-                this.style.backgroundColor = randomColor;
+                cellColor = randomColor;
             } else if (color === "Rainbow") {
-                this.style.backgroundColor = chooseRandomColor();
+                cellColor = randomShade(1);
             } else if (color === "Shade") {
                 if (shade < 1) {
                     shade += .1;
-                    this.style.backgroundColor = "rgba(0,0,0," + shade + ")";
+                    cellColor = "rgba(0,0,0," + shade + ")";
                 } else {
-                    this.style.backgroundColor = "black";
+                    cellColor = "black";
                 }
             } else if (color === "Random Shade") {
                 if (shade < 1) {
                     shade += .1;
-                    this.style.backgroundColor = "rgba(" + red + "," + blue + "," + green + "," + shade + ")";
+                    cellColor = "rgba(" + red + "," + blue + "," + green + "," + shade + ")";
                 } else {
-                    this.style.backgroundColor = "rgba(" + red + "," + blue + "," + green + ", 1)";
+                    cellColor = "rgba(" + red + "," + blue + "," + green + ", 1)";
                 }
             } else if (color === "Rainbow Shade") {
                 if (shade < 1) {
                     shade += .1;
-                    this.style.backgroundColor = randomShade(shade);
+                    cellColor = randomShade(shade);
                 }
             } else {
-                this.style.backgroundColor = color;
+                cellColor = color;
             }
+            this.style.background = cellColor;
         });
     }
 }
 
-function chooseRandomColor() {
-    return "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
-}
-
 function randomShade(alpha) {
-    return "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + alpha + ")";
+    return "rgba(" + randomRGBValue() + "," + randomRGBValue() + "," + randomRGBValue() + "," + alpha + ")";
 }
 
 function randomRGBValue() {
     return Math.floor(Math.random() * 255)
 }
 // --Functions
-
-
-// Each time I use the shaders, it adds another event listener, so I need to delete the old one before adding the new
