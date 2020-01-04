@@ -74,21 +74,17 @@ function chooseColor(color) {
             } else if (color === "Rainbow") {
                 cellColor = randomShade(1);
             } else if (color === "Shade") {
-                if (shade < 1) {
+                if (shade <= 1) {
                     shade += .1;
                     cellColor = "rgba(0,0,0," + shade + ")";
-                } else {
-                    cellColor = "black";
                 }
             } else if (color === "Random Shade") {
-                if (shade < 1) {
+                if (shade <= 1) {
                     shade += .1;
                     cellColor = "rgba(" + red + "," + blue + "," + green + "," + shade + ")";
-                } else {
-                    cellColor = "rgba(" + red + "," + blue + "," + green + ", 1)";
                 }
             } else if (color === "Rainbow Shade") {
-                if (shade < 1) {
+                if (shade <= 1) {
                     shade += .1;
                     cellColor = randomShade(shade);
                 }
