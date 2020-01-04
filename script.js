@@ -38,6 +38,7 @@ function createGrid(size) {
     for (let i = 0; i < size * size; i++) {
         let newCell = document.createElement("div");
         newCell.classList.add('cell');
+        newCell.setAttribute('id', `cell${i}`);
         canvas.appendChild(newCell);
     }
     chooseColor('Black');
@@ -57,11 +58,13 @@ function reset() {
 
 function chooseColor(color) {
     let cells = Array.from(document.querySelectorAll(".cell"));
-    let cellsObject = Object.assign({}, cells);
     let randomColor = chooseRandomColor();
+    let red = randomRGBValue();
+    let blue = randomRGBValue();
+    let green = randomRGBValue();
+
     for (let i = 0; i < cells.length; i++) {
-        cellsObject[i].blackShadeLevel = 0;
-        cellsObject[i].blueShadeLevel = 0;
+        let shade = 0;
         cells[i].addEventListener('mouseover', function() {
             if (color === "Eraser") {
                 this.style.background = "none";
@@ -70,19 +73,23 @@ function chooseColor(color) {
             } else if (color === "Rainbow") {
                 this.style.backgroundColor = chooseRandomColor();
             } else if (color === "Shade") {
-                if (cellsObject[i].blackShadeLevel < 1) {
-                    cellsObject[i].blackShadeLevel += .1;
-                    this.style.backgroundColor = "rgb(0,0,0," + cellsObject[i].blackShadeLevel + ")";
+                if (shade < 1) {
+                    shade += .1;
+                    this.style.backgroundColor = "rgba(0,0,0," + shade + ")";
                 } else {
-                    this.style.backgroundColor = "rgb(0,0,0)";
+                    this.style.backgroundColor = "black";
                 }
-
-            } else if (color === "Blue Shade") {
-                if (cellsObject[i].blueShadeLevel < 1) {
-                    cellsObject[i].blueShadeLevel += .1;
-                    this.style.backgroundColor = "rgb(0,0,255," + cellsObject[i].blueShadeLevel + ")";
+            } else if (color === "Random Shade") {
+                if (shade < 1) {
+                    shade += .1;
+                    this.style.backgroundColor = "rgba(" + red + "," + blue + "," + green + "," + shade + ")";
                 } else {
-                    this.style.backgroundColor = "rgb(0,0,255)";
+                    this.style.backgroundColor = "rgba(" + red + "," + blue + "," + green + ", 1)";
+                }
+            } else if (color === "Rainbow Shade") {
+                if (shade < 1) {
+                    shade += .1;
+                    this.style.backgroundColor = randomShade(shade);
                 }
             } else {
                 this.style.backgroundColor = color;
@@ -93,6 +100,14 @@ function chooseColor(color) {
 
 function chooseRandomColor() {
     return "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+}
+
+function randomShade(alpha) {
+    return "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + alpha + ")";
+}
+
+function randomRGBValue() {
+    return Math.floor(Math.random() * 255)
 }
 // --Functions
 
