@@ -1,11 +1,11 @@
 // Initial Setup
 let color = '';
 let canvas = document.querySelector("#canvas");
-let currentColor = document.querySelector("#currentColor");
-// let size = 16;
+let currentColorDisplay = document.querySelector("#currentColor");
+let isShaded = document.querySelector("#shadeTrue")
+
 createGrid(20, canvas);
-currentColor.style.background = "Black";
-setPenColor("Black");
+setPenColor(0, 0, 0);
 // --Initial Setup
 
 
@@ -13,35 +13,88 @@ setPenColor("Black");
 
 // Buttons
 let resetButton = document.querySelector('#reset');
-resetButton.addEventListener('click', reset);
+resetButton.addEventListener('click', function() {
+    reset(20);
+});
 
 //the choose size button deletes the old grid and creates new one
 let input = document.querySelector('#sizeInput')
 let button = document.querySelector("#sizeButton")
 button.addEventListener('click', function() {
-    let size = Number(input.value);
-    deleteGrid(canvas);
-    createGrid(size, canvas);
-    setPenColor("Black");
+    reset(Number(input.value));
+
 });
 
-let colorButtons = Array.from(document.querySelectorAll(".colorButtons"));
-for (let i = 0; i < colorButtons.length; i++) {
-    colorButtons[i].addEventListener('click', function() {
-        let randomColor = pickRandomColor(1);
-        let red = randomRGBValue();
-        let green = randomRGBValue();
-        let blue = randomRGBValue();
+let blackPen = document.querySelector("#blackPen")
+blackPen.addEventListener("click", function() {
+    setPenColor(0, 0, 0);
+});
 
-        color = this.textContent;
-        setPenColor(color, randomColor, red, green, blue);
-    });
-}
+let randomPen = document.querySelector("#randomPen")
+randomPen.addEventListener('click', function() {
+    let randomRed = randomRGBValue();
+    let randomGreen = randomRGBValue();
+    let randomBlue = randomRGBValue();
+    setPenColor(randomRed, randomGreen, randomBlue);
+});
+
+let rainbowPen = document.querySelector("#rainbowPen");
+rainbowPen.addEventListener('click', function() {
+    setPenColor(0, 0, 0, true);
+});
+
+
+let eraser = document.querySelector("#eraser")
+eraser.addEventListener('click', function() {
+    setPenColor(255, 255, 255);
+});
+
+
+let setRGBButton = document.querySelector("#setRGB")
+let red = document.querySelector("#red")
+let green = document.querySelector("#green")
+let blue = document.querySelector("#blue")
+setRGBButton.addEventListener("click", function() {
+    r = Number(red.value)
+    g = Number(green.value)
+    b = Number(blue.value)
+    setPenColor(r, g, b);
+});
 // --Buttons
 
 
-
 // Functions
+function setPenColor(r, g, b, rainbowed) {
+    deleteGrid(currentColorDisplay);
+    currentColorDisplay.style.background = pickColor(r, g, b, 1);
+
+    if (rainbowed) {
+        createGrid(4, currentColorDisplay);
+        let currentColorCells = Array.from(document.querySelectorAll(".currentColorCell"));
+        for (let i = 0; i < currentColorCells.length; i++) {
+            currentColorCells[i].style.background = pickColor(randomRGBValue(), randomRGBValue(), randomRGBValue(), 1);
+        }
+    }
+
+    let canvasCells = Array.from(document.querySelectorAll(".canvasCell"));
+    for (let i = 0; i < canvasCells.length; i++) {
+        let shade = 0;
+        canvasCells[i].addEventListener('mouseover', function() {
+            if (rainbowed) {
+                r = randomRGBValue();
+                g = randomRGBValue();
+                b = randomRGBValue();
+            }
+            if (isShaded.checked && shade <= 1) {
+                shade += .1;
+            } else {
+                shade = 1;
+            }
+            this.style.background = pickColor(r, g, b, shade);
+        });
+    }
+}
+
 function createGrid(size, location) {
     if (location === canvas) {
         document.documentElement.style.setProperty('--canvasSize', size);
@@ -65,62 +118,18 @@ function deleteGrid(location) {
     }
 }
 
-function reset() {
+function reset(size) {
     deleteGrid(canvas);
-    deleteGrid(currentColor);
-    createGrid(20, canvas);
-    setPenColor("Black");
+    deleteGrid(currentColorDisplay);
+    createGrid(size, canvas);
+    setPenColor(0, 0, 0);
 }
 
-
-function setPenColor(color, randomColor, red, green, blue) {
-    deleteGrid(currentColor);
-    currentColor.style.background = selectColor(color, randomColor, 1, red, green, blue);
-    if (color.indexOf("Rainbow") > -1) {
-        createGrid(4, currentColor);
-        let currentColorCells = Array.from(document.querySelectorAll(".currentColorCell"));
-        for (let i = 0; i < currentColorCells.length; i++) {
-            currentColorCells[i].style.background = pickRandomColor(1);
-        }
-    }
-
-    let canvasCells = Array.from(document.querySelectorAll(".canvasCell"));
-    for (let i = 0; i < canvasCells.length; i++) {
-        let shade = 0;
-        canvasCells[i].addEventListener('mouseover', function() {
-            if (color.indexOf("Shade") > -1) {
-                if (shade <= 1) {
-                    shade += .1;
-                }
-            }
-            this.style.background = selectColor(color, randomColor, shade, red, green, blue);
-        });
-    }
-}
-
-function pickRandomColor(alpha) {
-    return "rgba(" + randomRGBValue() + "," + randomRGBValue() + "," + randomRGBValue() + "," + alpha + ")";
+function pickColor(red, green, blue, alpha) {
+    return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
 }
 
 function randomRGBValue() {
     return Math.floor(Math.random() * 255)
-}
-
-function selectColor(color, randomColor, shade, red, green, blue) {
-    if (color === "Eraser") {
-        return "none";
-    } else if (color === "Random") {
-        return randomColor;
-    } else if (color === "Rainbow") {
-        return pickRandomColor(1);
-    } else if (color === "Shade") {
-        return "rgba(0,0,0," + shade + ")";
-    } else if (color === "Random Shade") {
-        return "rgba(" + red + "," + green + "," + blue + "," + shade + ")";
-    } else if (color === "Rainbow Shade") {
-        return pickRandomColor(shade);
-    } else {
-        return color;
-    }
 }
 // --Functions

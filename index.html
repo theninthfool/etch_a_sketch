@@ -13,30 +13,25 @@
     <h1>Etch A Sketch</h1>
     <button id="reset">Reset</button>
 
-    <div id="canvas">
+    <h4>Choose Color:</h4>
+    <button class="colorButtons" id="blackPen">Black</button>
+    <button class="colorButtons" id="randomPen">Random</button>
+    <button class="colorButtons" id="rainbowPen">Rainbow</button>
+    <button class="colorButtons" id="eraser">Eraser</button>
 
-    </div>
-
-    <button id="sizeButton">Choose size</button>
-    <input id='sizeInput' type="text">
-
-    <br>
-
-    <button class="colorButtons">Red</button>
-    <button class="colorButtons">Green</button>
-    <button class="colorButtons">Blue</button>
-    <button class="colorButtons">Orange</button>
-    <button class="colorButtons">Black</button>
-    <button class="colorButtons">Eraser</button>
-    <button class="colorButtons">Random</button>
-    <button class="colorButtons">Rainbow</button>
-    <button class="colorButtons">Shade</button>
-    <button class="colorButtons">Random Shade</button>
-    <button class="colorButtons">Rainbow Shade</button>
+    <p>rgb(<input type="text" id="red">,<input type="text" id="green">,<input type="text" id="blue">)</p>
+    <button id="setRGB">Set RGB</button>
 
     <div id="currentColor"></div>
 
+    <p>Shade?</p>
+    <input type="radio" name="shade" id="shadeTrue">Yes
+    <input type="radio" name="shade" id="shadeFalse" checked>No
 
+    <div id="canvas"></div>
+
+    <button id="sizeButton">Choose size</button>
+    <input id='sizeInput' type="text">
 
     <script src="script.js"></script>
 </body>
