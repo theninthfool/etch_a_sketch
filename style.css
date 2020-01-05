@@ -13,8 +13,8 @@
     margin: auto;
     display: grid;
     /* The size variable comes from js file */
-    grid-template-columns: repeat(var(--size), 1fr);
-    grid-template-rows: repeat(var(--size), 1fr);
+    grid-template-columns: repeat(var(--canvasSize), 1fr);
+    grid-template-rows: repeat(var(--canvasSize), 1fr);
     border: .1px solid gray;
 }
 
@@ -32,6 +32,6 @@ button {
     margin-top: 10px;
     display: grid;
     /* The size variable comes from js file */
-    grid-template-columns: repeat(var(--size), 1fr);
-    grid-template-rows: repeat(var(--size), 1fr);
+    grid-template-columns: repeat(var(--currentColorSize), 1fr);
+    grid-template-rows: repeat(var(--currentColorSize), 1fr);
 }

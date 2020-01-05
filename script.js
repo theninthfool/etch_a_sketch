@@ -5,7 +5,7 @@ let currentColor = document.querySelector("#currentColor");
 // let size = 16;
 createGrid(20, canvas);
 currentColor.style.background = "Black";
-chooseColor("Black");
+setPenColor("Black");
 // --Initial Setup
 
 
@@ -22,20 +22,19 @@ button.addEventListener('click', function() {
     let size = Number(input.value);
     deleteGrid(canvas);
     createGrid(size, canvas);
-    chooseColor("Black");
+    setPenColor("Black");
 });
 
 let colorButtons = Array.from(document.querySelectorAll(".colorButtons"));
 for (let i = 0; i < colorButtons.length; i++) {
     colorButtons[i].addEventListener('click', function() {
         let randomColor = pickRandomColor(1);
-
         let red = randomRGBValue();
-        let blue = randomRGBValue();
         let green = randomRGBValue();
+        let blue = randomRGBValue();
 
         color = this.textContent;
-        chooseColor(color, randomColor, red, green, blue);
+        setPenColor(color, randomColor, red, green, blue);
     });
 }
 // --Buttons
@@ -44,10 +43,18 @@ for (let i = 0; i < colorButtons.length; i++) {
 
 // Functions
 function createGrid(size, location) {
-    document.documentElement.style.setProperty('--size', size);
+    if (location === canvas) {
+        document.documentElement.style.setProperty('--canvasSize', size);
+    } else {
+        document.documentElement.style.setProperty('--currentColorSize', size);
+    }
     for (let i = 0; i < size * size; i++) {
         let newCell = document.createElement("div");
-        newCell.classList.add('cell');
+        if (location === canvas) {
+            newCell.classList.add('canvasCell');
+        } else {
+            newCell.classList.add('currentColorCell');
+        }
         location.appendChild(newCell);
     }
 }
@@ -61,17 +68,26 @@ function deleteGrid(location) {
 function reset() {
     deleteGrid(canvas);
     deleteGrid(currentColor);
-    createGrid(16, canvas);
-    chooseColor("Black");
+    createGrid(20, canvas);
+    setPenColor("Black");
 }
 
 
-function chooseColor(color, randomColor, red, green, blue) {
+function setPenColor(color, randomColor, red, green, blue) {
+    deleteGrid(currentColor);
     currentColor.style.background = selectColor(color, randomColor, 1, red, green, blue);
-    let cells = Array.from(document.querySelectorAll(".cell"));
-    for (let i = 0; i < cells.length; i++) {
+    if (color.indexOf("Rainbow") > -1) {
+        createGrid(4, currentColor);
+        let currentColorCells = Array.from(document.querySelectorAll(".currentColorCell"));
+        for (let i = 0; i < currentColorCells.length; i++) {
+            currentColorCells[i].style.background = pickRandomColor(1);
+        }
+    }
+
+    let canvasCells = Array.from(document.querySelectorAll(".canvasCell"));
+    for (let i = 0; i < canvasCells.length; i++) {
         let shade = 0;
-        cells[i].addEventListener('mouseover', function() {
+        canvasCells[i].addEventListener('mouseover', function() {
             if (color.indexOf("Shade") > -1) {
                 if (shade <= 1) {
                     shade += .1;
@@ -100,7 +116,7 @@ function selectColor(color, randomColor, shade, red, green, blue) {
     } else if (color === "Shade") {
         return "rgba(0,0,0," + shade + ")";
     } else if (color === "Random Shade") {
-        return "rgba(" + red + "," + blue + "," + green + "," + shade + ")";
+        return "rgba(" + red + "," + green + "," + blue + "," + shade + ")";
     } else if (color === "Rainbow Shade") {
         return pickRandomColor(shade);
     } else {
