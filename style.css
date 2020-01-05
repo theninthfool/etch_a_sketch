@@ -30,4 +30,8 @@ button {
     width: 50px;
     border: 2px solid black;
     margin-top: 10px;
+    display: grid;
+    /* The size variable comes from js file */
+    grid-template-columns: repeat(var(--size), 1fr);
+    grid-template-rows: repeat(var(--size), 1fr);
 }
