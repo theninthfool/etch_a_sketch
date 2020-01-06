@@ -1,14 +1,9 @@
 // Initial Setup
-let color = '';
 let canvas = document.querySelector("#canvas");
 let currentColorDisplay = document.querySelector("#currentColor");
 let isShaded = document.querySelector("#shadeTrue")
-
-createGrid(20, canvas);
-setPenColor(0, 0, 0);
+reset(20);
 // --Initial Setup
-
-
 
 
 // Buttons
@@ -17,12 +12,10 @@ resetButton.addEventListener('click', function() {
     reset(20);
 });
 
-//the choose size button deletes the old grid and creates new one
 let input = document.querySelector('#sizeInput')
-let button = document.querySelector("#sizeButton")
-button.addEventListener('click', function() {
+let sizeButton = document.querySelector("#sizeButton")
+sizeButton.addEventListener('click', function() {
     reset(Number(input.value));
-
 });
 
 let blackPen = document.querySelector("#blackPen")
@@ -43,12 +36,10 @@ rainbowPen.addEventListener('click', function() {
     setPenColor(0, 0, 0, true);
 });
 
-
 let eraser = document.querySelector("#eraser")
 eraser.addEventListener('click', function() {
     setPenColor(255, 255, 255);
 });
-
 
 let setRGBButton = document.querySelector("#setRGB")
 let red = document.querySelector("#red")
@@ -65,34 +56,8 @@ setRGBButton.addEventListener("click", function() {
 
 // Functions
 function setPenColor(r, g, b, rainbowed) {
-    deleteGrid(currentColorDisplay);
-    currentColorDisplay.style.background = pickColor(r, g, b, 1);
-
-    if (rainbowed) {
-        createGrid(4, currentColorDisplay);
-        let currentColorCells = Array.from(document.querySelectorAll(".currentColorCell"));
-        for (let i = 0; i < currentColorCells.length; i++) {
-            currentColorCells[i].style.background = pickColor(randomRGBValue(), randomRGBValue(), randomRGBValue(), 1);
-        }
-    }
-
-    let canvasCells = Array.from(document.querySelectorAll(".canvasCell"));
-    for (let i = 0; i < canvasCells.length; i++) {
-        let shade = 0;
-        canvasCells[i].addEventListener('mouseover', function() {
-            if (rainbowed) {
-                r = randomRGBValue();
-                g = randomRGBValue();
-                b = randomRGBValue();
-            }
-            if (isShaded.checked && shade <= 1) {
-                shade += .1;
-            } else {
-                shade = 1;
-            }
-            this.style.background = pickColor(r, g, b, shade);
-        });
-    }
+    setCurrentColorDisplay(r, g, b, rainbowed);
+    setCellListeners(r, g, b, rainbowed);
 }
 
 function createGrid(size, location) {
@@ -122,7 +87,16 @@ function reset(size) {
     deleteGrid(canvas);
     deleteGrid(currentColorDisplay);
     createGrid(size, canvas);
+    setGridSizeDisplay(size);
     setPenColor(0, 0, 0);
+}
+
+function setGridSizeDisplay(size) {
+    let gridSizeDisplayContainer = document.querySelector("#gridSizeDisplay");
+    deleteGrid(gridSizeDisplayContainer);
+    let gridSizeDisplay = document.createElement("h6");
+    gridSizeDisplay.textContent = size + " x " + size;
+    gridSizeDisplayContainer.appendChild(gridSizeDisplay);
 }
 
 function pickColor(red, green, blue, alpha) {
@@ -131,5 +105,38 @@ function pickColor(red, green, blue, alpha) {
 
 function randomRGBValue() {
     return Math.floor(Math.random() * 255)
+}
+
+function setCurrentColorDisplay(r, g, b, rainbowed) {
+    deleteGrid(currentColorDisplay);
+    if (rainbowed) {
+        createGrid(3, currentColorDisplay);
+        let currentColorCells = Array.from(document.querySelectorAll(".currentColorCell"));
+        for (let i = 0; i < currentColorCells.length; i++) {
+            currentColorCells[i].style.background = pickColor(randomRGBValue(), randomRGBValue(), randomRGBValue(), 1);
+        }
+    } else {
+        currentColorDisplay.style.background = pickColor(r, g, b, 1);
+    }
+}
+
+function setCellListeners(r, g, b, rainbowed) {
+    let canvasCells = Array.from(document.querySelectorAll(".canvasCell"));
+    for (let i = 0; i < canvasCells.length; i++) {
+        let shade = 0;
+        canvasCells[i].addEventListener('mouseover', function() {
+            if (rainbowed) {
+                r = randomRGBValue();
+                g = randomRGBValue();
+                b = randomRGBValue();
+            }
+            if (isShaded.checked && shade <= 1) {
+                shade += .1;
+            } else {
+                shade = 1;
+            }
+            this.style.background = pickColor(r, g, b, shade);
+        });
+    }
 }
 // --Functions

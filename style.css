@@ -2,10 +2,10 @@
     box-sizing: border-box;
 }
 
-
-/* * {
-    margin: 0;
-} */
+h1,
+p {
+    display: inline-block;
+}
 
 #canvas {
     background: white;
