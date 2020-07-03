@@ -10,29 +10,36 @@
 </head>
 
 <body>
-    <h1>Etch A Sketch</h1>
-    <button id="reset">Reset</button>
+    <div id="title">
+        <h1>Etch A Sketch</h1>
+        <button id="sizeButton">Choose size</button>
+        <input id='sizeInput' type="text">
+    </div>
 
-    <h4>Choose Color:</h4>
-    <button class="colorButtons" id="blackPen">Black</button>
-    <button class="colorButtons" id="randomPen">Random</button>
-    <button class="colorButtons" id="rainbowPen">Rainbow</button>
-    <button class="colorButtons" id="eraser">Eraser</button>
+    <div id="chooseColor">
+        <h4>Choose Color:</h4>
+        <button id="reset">Reset Board</button>
+        <button id="blackPen">Black</button>
+        <button id="randomPen">Random</button>
+        <button id="rainbowPen">Rainbow</button>
+        <button id="eraser">Eraser</button>
 
-    <p>rgb(<input type="text" id="red">,<input type="text" id="green">,<input type="text" id="blue">)</p>
-    <button id="setRGB">Set RGB</button>
+        <p>rgb(<input type="text" class="rgbInput" id="red">,<input type="text" class="rgbInput" id="green">,<input type="text" class="rgbInput" id="blue">)</p>
+        <button id="setRGB">Set RGB</button>
+    </div>
 
-    <div id="currentColor"></div>
+    <div id="shade">
+        <h4>Current Color: </h4>
+        <div id="currentColor"></div>
+        <div id="moreShade">
+            <p>Shade?</p>
+            <input type="radio" name="shade" id="shadeTrue">Yes
+            <input type="radio" name="shade" id="shadeFalse" checked>No
+            <h4 id="gridSizeDisplay"></h4>
+        </div>
+    </div>
 
-    <p>Shade?</p>
-    <input type="radio" name="shade" id="shadeTrue">Yes
-    <input type="radio" name="shade" id="shadeFalse" checked>No
-
-    <div id="gridSizeDisplay"></div>
     <div id="canvas"></div>
-
-    <button id="sizeButton">Choose size</button>
-    <input id='sizeInput' type="text">
 
     <script src="script.js"></script>
 </body>

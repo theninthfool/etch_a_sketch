@@ -1,10 +1,10 @@
 // Initial Setup
 let canvas = document.querySelector("#canvas");
 let currentColorDisplay = document.querySelector("#currentColor");
+let gridSizeDisplay = document.querySelector("#gridSizeDisplay");
 let isShaded = document.querySelector("#shadeTrue")
 reset(20);
 // --Initial Setup
-
 
 // Buttons
 let resetButton = document.querySelector('#reset');
@@ -25,10 +25,7 @@ blackPen.addEventListener("click", function() {
 
 let randomPen = document.querySelector("#randomPen")
 randomPen.addEventListener('click', function() {
-    let randomRed = randomRGBValue();
-    let randomGreen = randomRGBValue();
-    let randomBlue = randomRGBValue();
-    setPenColor(randomRed, randomGreen, randomBlue);
+    setPenColor(randomRGBValue(), randomRGBValue(), randomRGBValue());
 });
 
 let rainbowPen = document.querySelector("#rainbowPen");
@@ -46,10 +43,7 @@ let red = document.querySelector("#red")
 let green = document.querySelector("#green")
 let blue = document.querySelector("#blue")
 setRGBButton.addEventListener("click", function() {
-    r = Number(red.value)
-    g = Number(green.value)
-    b = Number(blue.value)
-    setPenColor(r, g, b);
+    setPenColor(Number(red.value), Number(green.value), Number(blue.value));
 });
 // --Buttons
 
@@ -63,6 +57,7 @@ function setPenColor(r, g, b, rainbowed) {
 function createGrid(size, location) {
     if (location === canvas) {
         document.documentElement.style.setProperty('--canvasSize', size);
+        gridSizeDisplay.textContent = size + " x " + size;
     } else {
         document.documentElement.style.setProperty('--currentColorSize', size);
     }
@@ -87,16 +82,7 @@ function reset(size) {
     deleteGrid(canvas);
     deleteGrid(currentColorDisplay);
     createGrid(size, canvas);
-    setGridSizeDisplay(size);
     setPenColor(0, 0, 0);
-}
-
-function setGridSizeDisplay(size) {
-    let gridSizeDisplayContainer = document.querySelector("#gridSizeDisplay");
-    deleteGrid(gridSizeDisplayContainer);
-    let gridSizeDisplay = document.createElement("h6");
-    gridSizeDisplay.textContent = size + " x " + size;
-    gridSizeDisplayContainer.appendChild(gridSizeDisplay);
 }
 
 function pickColor(red, green, blue, alpha) {

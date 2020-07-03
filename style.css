@@ -2,9 +2,15 @@
     box-sizing: border-box;
 }
 
-h1,
-p {
-    display: inline-block;
+#chooseColor,
+#title,
+#shade {
+    display: flex;
+    align-items: center;
+}
+
+.rgbInput {
+    width: 30px;
 }
 
 #canvas {
@@ -24,6 +30,7 @@ button {
     color: white;
     border: none;
     border-radius: 4px;
+    margin: 0 12px;
 }
 
 #currentColor {
@@ -35,4 +42,9 @@ button {
     /* The size variable comes from js file */
     grid-template-columns: repeat(var(--currentColorSize), 1fr);
     grid-template-rows: repeat(var(--currentColorSize), 1fr);
+}
+
+#gridSizeDisplay {
+    width: 60px;
+    margin: auto;
 }
