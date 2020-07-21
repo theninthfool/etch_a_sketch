@@ -2,7 +2,8 @@
 let canvas = document.querySelector("#canvas");
 let currentColorDisplay = document.querySelector("#currentColor");
 let gridSizeDisplay = document.querySelector("#gridSizeDisplay");
-let isShaded = document.querySelector("#shadeTrue")
+// let isShaded = document.querySelector("#shadeTrue")
+let isShaded = document.querySelector("#isShaded");
 reset(20);
 // --Initial Setup
 
@@ -12,9 +13,9 @@ resetButton.addEventListener('click', function() {
     reset(20);
 });
 
-let input = document.querySelector('#sizeInput')
+let input = document.querySelector('#size-input')
 let sizeButton = document.querySelector("#sizeButton")
-sizeButton.addEventListener('click', function() {
+sizeButton.addEventListener('click', function(e) {
     reset(Number(input.value));
 });
 
